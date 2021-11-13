@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   renderContent() {
@@ -10,7 +11,11 @@ class Header extends Component {
       case false:
         return (
           <li className="nav-item">
-            <a href="/auth/google" className="nav-link active">
+            <a
+              href="/auth/google"
+              style={{ color: "white" }}
+              className="nav-link btn btn-danger"
+            >
               Login With Google
             </a>
           </li>
@@ -31,9 +36,12 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-light bg-light">
         <div className="container">
-          <a className="navbar-brand" href>
+          <Link
+            to={this.props.auth ? "/surveys" : "/"}
+            className="navbar-brand"
+          >
             FeedBack App
-          </a>
+          </Link>
           <ul className="nav justify-content-end">{this.renderContent()}</ul>
         </div>
       </nav>
