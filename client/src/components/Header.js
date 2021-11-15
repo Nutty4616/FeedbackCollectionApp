@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Payments from "./Payments";
 
 class Header extends Component {
   renderContent() {
@@ -22,13 +23,16 @@ class Header extends Component {
         );
 
       default:
-        return (
-          <li className="nav-item">
+        return [
+          <li key="1" className="nav-item">
+            <Payments />
+          </li>,
+          <li key="2" className="nav-item">
             <a href="/api/logout" className="nav-link">
               Logout
             </a>
-          </li>
-        );
+          </li>,
+        ];
     }
   }
 
