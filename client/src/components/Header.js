@@ -27,6 +27,11 @@ class Header extends Component {
           <li key="1" className="nav-item">
             <Payments />
           </li>,
+          <li key="3" className="nav-item">
+            <a href style={{ color: "#000" }} className="nav-link">
+              Credits: {this.props.auth.credits}
+            </a>
+          </li>,
           <li key="2" className="nav-item">
             <a href="/api/logout" className="nav-link">
               Logout
