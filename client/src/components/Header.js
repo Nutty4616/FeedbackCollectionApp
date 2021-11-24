@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Payments from "./Payments";
+import { FaGoogle } from "react-icons/fa";
 
 class Header extends Component {
   renderContent() {
@@ -17,7 +18,8 @@ class Header extends Component {
               style={{ color: "white" }}
               className="nav-link btn btn-danger"
             >
-              Login With Google
+              <FaGoogle style={{ marginBottom: "5px" }} />{" "}
+              <b> Login with Google</b>
             </a>
           </li>
         );
