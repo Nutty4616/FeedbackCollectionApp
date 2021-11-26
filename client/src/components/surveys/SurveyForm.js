@@ -1,52 +1,73 @@
+import _ from "lodash";
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
+import { IoMdDoneAll } from "react-icons/io";
+import { Link } from "react-router-dom";
 import SurveyField from "./SurveyField";
+import validateEmails from "../../utils/validateEmails";
+
+const FIELDS = [
+  {
+    label: "Survey Title",
+    name: "title",
+    noValue: "You must provide a Survey Title",
+  },
+  {
+    label: "Subject Line",
+    name: "subject",
+    noValue: "You must provide a Subject Line",
+  },
+  {
+    label: "Email Body",
+    name: "body",
+    noValue: "You must provide an Email Body",
+  },
+  {
+    label: "Recipient List",
+    name: "emails",
+    noValue: "You must provide Recipient List",
+  },
+];
 
 class SurveyForm extends Component {
   renderFields() {
-    return (
-      <div>
+    return _.map(FIELDS, ({ label, name }) => {
+      return (
         <Field
-          label="Survey Title"
-          type="text"
-          name="title"
+          key={name}
           component={SurveyField}
-        />
-        <Field
-          label="Subject Line"
           type="text"
-          name="subject"
-          component={SurveyField}
+          label={label}
+          name={name}
         />
-        <Field
-          label="Email Body"
-          type="text"
-          name="body"
-          component={SurveyField}
-        />
-        <Field
-          label="Recipient List"
-          type="text"
-          name="emails"
-          component={SurveyField}
-        />
-      </div>
-    );
+      );
+    });
   }
 
   render() {
     return (
-      <div>
+      <div className="container">
         <form
-          onSubmit={this.props.handleSubmit((values) => console.log(values))}
+          className="row"
+          style={{ marginTop: "20px" }}
+          onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
         >
           {this.renderFields()}
+          <Link
+            to="/surveys"
+            style={{ marginTop: "20px", marginRight: "70%" }}
+            className="btn btn-secondary col"
+          >
+            Cancel
+          </Link>
+
           <button
-            className="btn btn-primary"
+            className="btn btn-primary col"
             style={{ marginTop: "20px" }}
             type="submit"
           >
-            Submit
+            Next
+            <IoMdDoneAll style={{ marginLeft: "10px" }} />
           </button>
         </form>
       </div>
@@ -54,6 +75,23 @@ class SurveyForm extends Component {
   }
 }
 
+// Validation Logic
+function validate(values) {
+  const errors = {};
+
+  errors.emails = validateEmails(values.emails || "");
+
+  _.each(FIELDS, ({ name, noValue }) => {
+    if (!values[name]) {
+      errors[name] = noValue;
+    }
+  });
+
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: "surveyForm",
+  destroyOnUnmount: false,
 })(SurveyForm);
