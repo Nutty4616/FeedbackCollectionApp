@@ -5,33 +5,11 @@ import { IoMdDoneAll } from "react-icons/io";
 import { Link } from "react-router-dom";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
-
-const FIELDS = [
-  {
-    label: "Survey Title",
-    name: "title",
-    noValue: "You must provide a Survey Title",
-  },
-  {
-    label: "Subject Line",
-    name: "subject",
-    noValue: "You must provide a Subject Line",
-  },
-  {
-    label: "Email Body",
-    name: "body",
-    noValue: "You must provide an Email Body",
-  },
-  {
-    label: "Recipient List",
-    name: "emails",
-    noValue: "You must provide Recipient List",
-  },
-];
+import formFields from "./formFields";
 
 class SurveyForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name }) => {
+    return _.map(formFields, ({ label, name }) => {
       return (
         <Field
           key={name}
@@ -79,9 +57,9 @@ class SurveyForm extends Component {
 function validate(values) {
   const errors = {};
 
-  errors.emails = validateEmails(values.emails || "");
+  errors.recipients = validateEmails(values.recipients || "");
 
-  _.each(FIELDS, ({ name, noValue }) => {
+  _.each(formFields, ({ name, noValue }) => {
     if (!values[name]) {
       errors[name] = noValue;
     }
