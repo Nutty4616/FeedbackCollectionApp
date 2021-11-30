@@ -16,7 +16,7 @@ const Dashboard = () => {
             position: "fixed",
             width: "60px",
             height: "60px",
-            bottom: "40px",
+            bottom: "60px",
             right: "40px",
             color: "white",
             borderRadius: "50px",
